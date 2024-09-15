@@ -1,4 +1,3 @@
-# Rubio-GradesComputation
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -49,6 +48,7 @@
     </style>
 </head>
 <body>
+    <section class="container">
     <div class="container">
         <h1>Grade Calculator</h1>
         <p>Enter your prelim grade to calculate the required midterm and finals grade to pass.</p>
@@ -58,6 +58,7 @@
 
         <div id="result" class="result"></div>
     </div>
+    </section>
 
     <script>
         function calculateGrade() {
