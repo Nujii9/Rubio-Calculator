@@ -52,35 +52,27 @@
     <div class="container">
         <h1>Grade Calculator</h1>
         <p>Enter your prelim grade to calculate the required midterm and finals grade to pass.</p>
-
         <input type="number" id="prelimGrade" placeholder="Enter prelim grade (0-100)">
         <button onclick="calculateGrade()">Calculate</button>
-
         <div id="result" class="result"></div>
     </div>
     </section>
-
     <script>
         function calculateGrade() {
             // Get the prelim grade from the input field
             let prelimGrade = parseFloat(document.getElementById('prelimGrade').value);
-            
             // Check if the input is valid
             if (isNaN(prelimGrade) || prelimGrade < 0 || prelimGrade > 100) {
                 document.getElementById('result').innerHTML = "Please enter a valid prelim grade between 0 and 100.";
                 return;
             }
-
             // Calculate the prelim component (20% of the prelim grade)
             let prelimComponent = prelimGrade * 0.20;
-            
             // Set the required overall grade to pass the subject (75%)
             let requiredOverallGrade = 75;
-            
             // Calculate the remaining grade needed for midterms/finals
             let remainingGradeNeeded = requiredOverallGrade - prelimComponent;
-            let requiredMidtermFinalsGrade = remainingGradeNeeded / 0.80;
-            
+            let requiredMidtermFinalsGrade = remainingGradeNeeded / 0.80
             // Display the result
             if (requiredMidtermFinalsGrade <= 100) {
                 document.getElementById('result').innerHTML = `With a prelim grade of ${prelimGrade}, you need a Midterm/Finals grade of ${requiredMidtermFinalsGrade.toFixed(2)}% to pass.`;
