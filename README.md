@@ -61,63 +61,56 @@
     </div>
 
     <py-script>
+        # Function to calculate required grades
         def calculate_required_grades(prelim_grade):
-            # Check if the input is numeric
-            if not isinstance(prelim_grade, (int, float)):
-                return "Error: Please enter a valid numerical grade for prelim."
-            
-            # Check if the prelim grade is within the valid range
-            if prelim_grade < 0 or prelim_grade > 100:
-                return "Error: Please enter a grade between 0 and 100."
-            
-            # Define constants for the weight of each grade
             prelim_weight = 0.20
             midterm_weight = 0.30
             finals_weight = 0.50
             passing_grade = 75
             deans_lister_grade = 90
 
-            # Calculate the grade contribution from the prelim
+            if not isinstance(prelim_grade, (int, float)):
+                return "Error: Please enter a valid numerical grade for prelim."
+            
+            if prelim_grade < 0 or prelim_grade > 100:
+                return "Error: Please enter a grade between 0 and 100."
+            
             prelim_contribution = prelim_grade * prelim_weight
 
-            # Determine the required remaining grade
-            required_remaining = passing_grade - prelim_contribution
-            
-            if required_remaining > (midterm_weight + finals_weight) * 100:
-                return "The student has no chance to pass."
+            remaining_to_pass = passing_grade - prelim_contribution
+            remaining_to_deans = deans_lister_grade - prelim_contribution
 
-            # Calculate the required grades for midterms and finals to pass
-            # Assume that midterm and finals grades are the same to simplify
-            required_midterm_finals = required_remaining / (midterm_weight + finals_weight)
+            if remaining_to_pass > 0:
+                required_midterm_to_pass = remaining_to_pass / midterm_weight if remaining_to_pass / midterm_weight <= 100 else 100
+                required_finals_to_pass = (remaining_to_pass - (required_midterm_to_pass * midterm_weight)) / finals_weight
+                if required_finals_to_pass > 100:
+                    return "It is difficult to pass."
 
-            # Check if it's possible to be a Dean's Lister
-            required_deans_lister_remaining = deans_lister_grade - prelim_contribution
-            required_midterm_finals_deans = required_deans_lister_remaining / (midterm_weight + finals_weight)
-            
-            if required_midterm_finals > 100:
-                return "The student has no chance to pass."
-            
-            result = f"To pass, you need at least {required_midterm_finals:.2f} in both midterms and finals."
-            
-            if required_midterm_finals_deans <= 100:
-                result += f"\nTo qualify for Dean's Lister, you need at least {required_midterm_finals_deans:.2f} in both midterms and finals."
+                result = f"To pass, you need Midterm Grade: {required_midterm_to_pass:.2f}, Finals Grade: {required_finals_to_pass:.2f}."
             else:
-                result += "\nThe student cannot qualify for Dean's Lister."
+                result = "You have already passed based on your Prelim grade!"
+
+            if remaining_to_deans > 0:
+                required_midterm_to_deans = remaining_to_deans / midterm_weight if remaining_to_deans / midterm_weight <= 100 else 100
+                required_finals_to_deans = (remaining_to_deans - (required_midterm_to_deans * midterm_weight)) / finals_weight
+                if required_finals_to_deans <= 100:
+                    result += f"\nTo qualify for Dean's Lister, you need Midterm Grade: {required_midterm_to_deans:.2f}, Finals Grade: {required_finals_to_deans:.2f}."
+                else:
+                    result += "\nThe student cannot qualify for Dean's Lister."
+            else:
+                result += "\nYou are qualified for Dean's Lister!"
 
             return result
 
+        # Function to handle button click
         def calculate():
-            # Get the prelim grade from the input field
             prelim_grade_input = Element('prelimGrade').value
-            
             try:
-                # Convert input to float and calculate the result
                 prelim_grade = float(prelim_grade_input)
                 result = calculate_required_grades(prelim_grade)
             except ValueError:
                 result = "Error: Please enter a valid numerical value for the prelim grade."
             
-            # Display the result in the result div
             Element('result').write(result)
     </py-script>
 
