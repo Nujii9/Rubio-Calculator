@@ -9,9 +9,9 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #3c3744;
+            background: url('bgegr.jpg') no-repeat;
             text-align: center;
-            padding: 20px;
+            padding: 0;
         }
         .container {
             background-color: #111;
@@ -26,11 +26,11 @@
             width: 100%;
             padding: 10px;
             margin: 10px 0;
-            border: 1px solid #a54b4b;
+            border: 1px solid #192ce7;
             border-radius: 5px;
         }
         button {
-            background-color: #ad2828;
+            background-color: #0a1582;
             color: #000;
             border: none;
             padding: 10px 20px;
@@ -39,12 +39,12 @@
             font-size: 16px;
         }
         button:hover {
-            background-color: #d83535;
+            background-color: #0f20cb;
         }
         .result {
             margin-top: 20px;
             padding: 10px;
-            background-color: #7a2020;
+            background-color: #0f197d;
             border-radius: 5px;
         }
     </style>
